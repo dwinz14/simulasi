@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulasi Kredit — Bpr Artha Pamenang</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ============================================================
+     TOPBAR
+    ============================================================ -->
+    <header class="topbar">
+      <a class="topbar-brand" href="#">
+        <span class="topbar-name">BPR<span> Artha Pamenang</span></span>
+      </a>
+      <div class="topbar-badge">Simulasi Kredit</div>
+    </header>
+
+    <!-- ============================================================
+     PAGE
+    ============================================================ -->
+    <main class="page">
+      <div class="section-header">
+        <div class="section-label">Kalkulator Kredit</div>
+        <h1 class="section-title">Simulasi Angsuran</h1>
+      </div>
+
+      <div class="product-tabs" id="productTabs" role="tablist" aria-label="Pilih Produk Kredit"></div>
+
+      <div class="card" id="formCard">
+        <div class="card-header">
+          <div class="card-icon" id="cardIcon">💰</div>
+          <div class="card-header-text">
+            <div class="card-title" id="cardTitle">—</div>
+            <div class="card-desc" id="cardDesc">—</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-grid" id="formFields"></div>
+          <div style="margin-top: 22px">
+            <div class="auto-calc-hint">⚡ Kalkulasi berjalan otomatis saat Anda mengisi form</div>
+          </div>
+        </div>
+      </div>
+
+      <section id="resultSection" aria-live="polite">
+        <div class="kpi-grid" id="kpiGrid"></div>
+
+        <div class="table-card">
+          <div class="table-toolbar">
+            <div class="table-toolbar-title">
+              Tabel Angsuran
+              <span class="pill" id="tablePill">—</span>
+            </div>
+            <button class="btn-export" onclick="exportCSV()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Ekspor CSV
+            </button>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead id="tableHead"></thead>
+              <tbody id="tableBody"></tbody>
+              <tfoot id="tableFoot"></tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="disclaimer">
+          <div class="disclaimer-icon">⚠️</div>
+          <p>
+            <strong>Catatan:</strong> Angka simulasi ini bersifat indikatif dan dihitung berdasarkan parameter yang dimasukkan. Angsuran dan biaya aktual dapat berbeda tergantung kebijakan lembaga keuangan, kondisi pasar, serta profil
+            pemohon. Konsultasikan dengan petugas kredit untuk informasi resmi.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p><strong>Information Technology</strong> &mdash; BPR Artha Pamenang &copy; <span id="year"></span></p>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- CUSTOM MODAL WARNING DP -->
+    <div id="dpModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-icon">⚠️</div>
+        <h3 class="modal-title">Uang Muka (DP) Kurang Dari Minimum</h3>
+        <p id="modalMessage" class="modal-text"></p>
+
+        <div class="modal-buttons">
+          <button id="modalCancel" class="btn-secondary">Batal</button>
+          <button id="modalConfirm" class="btn-primary">Gunakan</button>
+        </div>
+      </div>
+    </div>
+    <!-- External JavaScript -->
+    <script src="script.js"></script>
+  </body>
+</html>
