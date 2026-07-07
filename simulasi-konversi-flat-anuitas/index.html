@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Simulasi Kredit</title>
+<style>
+:root{--primary-color:#0f172a;--primary-dark:#020617;--primary-light:#334155;--secondary-color:#f8fafc;--font-color:#334155;--border-color:#e2e8f0;--bg-color:linear-gradient(135deg,#1e293b 0%,#020617 100%);--white-color:#ffffff;--success-color:#0f766e;--success-dark:#042f2e;--shadow-sm:0 1px 2px 0 rgba(0,0,0,0.05);--shadow-md:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);--shadow-premium:0 25px 50px -12px rgba(0,0,0,0.5);--card-bg-flat:#f8fafc;--card-bg-anuitas:#f0fdfa;--font-sans:'Poppins',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}body{font-family:var(--font-sans);background:var(--bg-color);color:var(--font-color);margin:0;padding:1rem;display:flex;flex-direction:column;align-items:center;min-height:100vh;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}.container{width:100%;max-width:1200px;background:var(--white-color);border-radius:16px;box-shadow:var(--shadow-premium);overflow:hidden;transition:all .3s ease;border:1px solid rgba(255,255,255,.8);}main{padding:1rem;}.tab-nav{display:inline-flex;background-color:var(--primary-color);padding:.35rem;border-radius:10px;border:none;margin-bottom:1.5rem;gap:.25rem;box-shadow:var(--shadow-md);}.tab-link{padding:.5rem 1.25rem;cursor:pointer;border:none;border-radius:8px;background-color:transparent;font-size:.9rem;font-weight:500;color:#94a3b8;transition:all .2s ease;}.tab-link:hover{color:var(--white-color);}.tab-link.active{background-color:var(--white-color);color:var(--primary-dark);box-shadow:var(--shadow-sm);font-weight:600;}.tab-pane{display:none;}.tab-pane.active{display:block;}.page-title-section{text-align:center;margin-bottom:1.5rem;}.page-title-section h1{font-size:1.5rem;font-weight:600;color:var(--primary-dark);margin:0 0 .25rem 0;}.page-title-section p{font-size:.9rem;color:#6c757d;margin:0;}.calculator-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;}@media (min-width:900px){.calculator-layout{grid-template-columns:380px 1fr;align-items:flex-start;}}.input-panel{border:1px solid var(--border-color);border-top:4px solid var(--primary-color);border-radius:12px;padding:1rem;background-color:var(--white-color);box-shadow:var(--shadow-md);}.form-grid{display:grid;grid-template-columns:1fr;gap:.4rem;}@media (min-width:600px){.form-grid{grid-template-columns:1fr;}}.form-group{display:flex;flex-direction:column;}.form-group label{margin-bottom:.1rem;font-weight:500;font-size:.7rem;color:#343a40;}.form-input{padding:.25rem .5rem;border:1px solid var(--border-color);border-radius:8px;font-size:.7rem;font-family:var(--font-sans);background-color:var(--white-color);transition:all .2s cubic-bezier(.4,0,.2,1);-webkit-appearance:none;appearance:none;}.form-input:focus{outline:none;border-color:var(--primary-color);background-color:var(--white-color);box-shadow:0 0 0 4px rgba(15,23,42,.1);}.submit-button{padding:.3rem 1rem;border:none;border-radius:8px;background:linear-gradient(135deg,var(--primary-color),var(--primary-light));color:var(--white-color);font-size:.75rem;font-weight:500;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);width:100%;margin-top:.25rem;box-shadow:var(--shadow-md);}.submit-button:hover{background:linear-gradient(135deg,var(--primary-dark),var(--primary-color));transform:translateY(-2px);box-shadow:var(--shadow-premium);}.reset-button{padding:.3rem 1rem;border:none;border-radius:8px;background:linear-gradient(135deg,#be123c,#e11d48);color:var(--white-color);font-size:.75rem;font-weight:500;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);text-decoration:none;display:flex;align-items:center;justify-content:center;margin-top:.25rem;box-shadow:var(--shadow-md);}.reset-button:hover{background:linear-gradient(135deg,#881337,#be123c);color:var(--white-color);transform:translateY(-2px);box-shadow:var(--shadow-premium);}.results-section{padding:0;margin:0;}.results-section h2{text-align:center;margin-bottom:1rem;font-weight:600;font-size:1.25rem;color:var(--primary-dark);}.table-responsive{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;box-shadow:0 4px 15px rgba(0,0,0,.07);border:1px solid var(--border-color);}table{width:100%;border-collapse:collapse;background-color:var(--white-color);}th,td{padding:.3rem .6rem;text-align:left;vertical-align:middle;border-bottom:1px solid var(--border-color);}thead th{background-color:var(--primary-dark);font-weight:600;font-size:.8rem;color:var(--white-color);letter-spacing:0;border-bottom:none;}tbody tr:last-child td{border-bottom:none;}tfoot td{font-weight:600;background-color:var(--primary-dark);color:var(--white-color);border-top:2px solid var(--primary-color);}td:first-child{font-weight:500;}.highlight{color:var(--primary-dark);font-weight:600;font-size:.8em;vertical-align:middle;margin-left:4px;}.amortization-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:1.5rem;}.amortization-grid table{font-size:.7rem;}.amortization-grid th,.amortization-grid td{padding:.25rem .4rem;white-space:nowrap;}.amortization-grid>div h3{text-align:center;color:var(--primary-dark);font-size:1.1rem;font-weight:600;}.amortization-grid>div:nth-child(2) h3{color:var(--success-dark);}.amortization-grid>div:nth-child(1) table thead th{background:linear-gradient(135deg,var(--primary-color),var(--primary-light));}.amortization-grid>div:nth-child(2) table thead th{background:linear-gradient(135deg,var(--success-color),#059669);}.amortization-grid>div:nth-child(2) table tfoot td{background-color:var(--success-color);border-top-color:var(--success-dark);}@media (min-width:1024px){.amortization-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}}.comparison-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;}@media (min-width:768px){.comparison-grid{grid-template-columns:1fr 1fr;}}.card{border:1px solid var(--border-color);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-md);transition:all .3s cubic-bezier(.4,0,.2,1);}.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-premium);}.comparison-grid .card:nth-child(1){border-top:none;}.comparison-grid .card:nth-child(2){border-top:none;}.comparison-grid .card:nth-child(1) .card-header{background:linear-gradient(135deg,var(--primary-color),var(--primary-light));border-bottom:none;}.comparison-grid .card:nth-child(2) .card-header{background:linear-gradient(135deg,var(--success-color),#059669);border-bottom:none;}.card-header{padding:.75rem 1rem;}.card-header h3{margin:0;font-size:.75rem;color:var(--white-color);font-weight:600;}.card-header .highlight{color:rgba(255,255,255,.75);}.card-body{padding:.75rem;display:flex;flex-direction:column;gap:.4rem;}.card-item{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;}.comparison-grid .card:nth-child(1) .card-body{background-color:var(--card-bg-flat);}.comparison-grid .card:nth-child(2) .card-body{background-color:var(--card-bg-anuitas);}.comparison-grid .card:nth-child(1) .card-item{color:var(--primary-dark);}.comparison-grid .card:nth-child(2) .card-item{color:var(--success-dark);}footer{text-align:center;padding:1rem 0;color:#94a3b8;font-size:.75rem;width:100%;margin-top:auto;}footer p{margin:0;}.toggle-details-container{text-align:center;margin-top:2rem;}.toggle-button{background-color:transparent;border:1.5px solid var(--primary-color);color:var(--primary-color);padding:.3rem 1.25rem;border-radius:8px;font-weight:500;font-size:.9rem;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);}.toggle-button:hover{background-color:var(--primary-color);color:var(--white-color);transform:translateY(-2px);box-shadow:var(--shadow-md);}.toggle-button.primary{background:linear-gradient(135deg,var(--primary-color),var(--primary-light));border:none;color:var(--white-color);}.disclaimer-section{margin-top:2rem;padding:.75rem 1rem;background-color:#f8fafc;border-left:3px solid var(--primary-color);border-radius:0 8px 8px 0;font-size:.65rem;color:#64748b;line-height:1.5;}.disclaimer-section strong{color:var(--primary-dark);}
+</style>
+</head>
+<body>
+<div class="container">
+<main>
+<div class="page-title-section">
+<h1>Simulasi Kredit</h1>
+<p>Bandingkan skema bunga Flat dan Anuitas secara akurat.</p>
+</div>
+<div class="tab-nav" id="tabNav">
+<button class="tab-link active" data-tab="kalkulator">Kalkulator & Hasil</button>
+<button class="tab-link" data-tab="detail" id="tabDetailBtn" style="display:none">Detail Angsuran</button>
+</div>
+<div class="tab-content">
+<div class="tab-pane active" id="kalkulator">
+<div class="calculator-layout">
+<div class="input-panel">
+<form id="calcForm" autocomplete="off">
+<div class="form-grid">
+<div class="form-group">
+<label for="nominal_pinjaman_formatted">Nominal Pinjaman (Rp)</label>
+<input type="text" id="nominal_pinjaman_formatted" class="form-input" value="10.000.000" inputmode="numeric" required>
+<input type="hidden" id="nominal_pinjaman" value="10000000">
+</div>
+<div class="form-group">
+<label for="tenor_bulan">Tenor (Bulan)</label>
+<input type="number" id="tenor_bulan" class="form-input" value="12" required>
+</div>
+<div class="form-group">
+<label for="suku_bunga_tahunan">Suku Bunga Flat (% per Tahun)</label>
+<input type="number" step="1" id="suku_bunga_tahunan" class="form-input" value="15" required>
+</div>
+</div>
+<div style="margin-top:2rem;display:flex;gap:.5rem;">
+<button type="submit" class="submit-button" style="flex:3;margin-top:0;">Hitung Simulasi</button>
+<button type="button" class="reset-button" style="flex:1;margin-top:0;" id="resetBtn">Reset</button>
+</div>
+</form>
+</div>
+<section class="results-section" id="hasilSection" style="display:none">
+<h2>Hasil Perbandingan</h2>
+<div class="comparison-grid">
+<div class="card">
+<div class="card-header"><h3>Flat</h3></div>
+<div class="card-body" id="flatResults"></div>
+</div>
+<div class="card">
+<div class="card-header"><h3>Anuitas <span class="highlight">(Ekuivalen)</span></h3></div>
+<div class="card-body" id="anuitasResults"></div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<div class="tab-pane" id="detail">
+<div class="amortization-grid">
+<div>
+<h3>Detail Angsuran Flat</h3>
+<div class="table-responsive"><table><thead><tr><th>Bln</th><th>Angsuran</th><th>Pokok</th><th>Bunga</th><th>Sisa Pinjaman</th></tr></thead><tbody id="flatAmortisasiBody"></tbody><tfoot id="flatAmortisasiFoot"></tfoot></table></div>
+</div>
+<div>
+<h3>Detail Angsuran Anuitas</h3>
+<div class="table-responsive"><table><thead><tr><th>Bln</th><th>Angsuran</th><th>Pokok</th><th>Bunga</th><th>Sisa Pinjaman</th></tr></thead><tbody id="anuitasAmortisasiBody"></tbody><tfoot id="anuitasAmortisasiFoot"></tfoot></table></div>
+</div>
+</div>
+</div>
+</div>
+<div class="toggle-details-container" id="downloadSection" style="display:none">
+<button type="button" id="downloadPdfBtn" class="toggle-button primary">Unduh sebagai PDF</button>
+</div>
+<div class="disclaimer-section">
+<p style="margin:0;"><strong>Disclaimer:</strong> Perhitungan pada simulasi ini bersifat estimasi awal dan ditujukan sebagai informasi umum semata. Besaran angsuran, suku bunga, biaya administrasi, serta ketentuan lainnya dapat berubah sewaktu-waktu sesuai dengan kebijakan perbankan yang berlaku dan hasil analisa persetujuan kredit. Untuk mendapatkan kepastian rincian perhitungan dan proses pengajuan fasilitas kredit resmi, silakan mengunjungi atau menghubungi kantor operasional PT BPR ARTHA PAMENANG terdekat.</p>
+</div>
+</main>
+</div>
+<footer><p>&copy; 2026 PT BPR ARTHA PAMENANG | Dibangun oleh Ahli_Prosesor.</p></footer>
+<script>
+function hitungAngsuranFlat(pokok, tenor, bungaTahunan) {
+  var bungaPerBulanAsli = (pokok * (bungaTahunan / 100)) / 12;
+  var pokokPerBulanAsli = pokok / tenor;
+  var bungaPerBulan = Math.ceil(bungaPerBulanAsli / 100) * 100;
+  var pokokPerBulan = Math.ceil(pokokPerBulanAsli / 100) * 100;
+  var angsuranBulanan = pokokPerBulan + bungaPerBulan;
+  var totalBunga = bungaPerBulan * tenor;
+  return { angsuran_bulanan: angsuranBulanan, total_bunga: totalBunga };
+}
+
+function hitungAngsuranAnuitas(pokok, tenor, bungaBulananPersen) {
+  if (bungaBulananPersen <= 0) {
+    return { angsuran_bulanan: pokok / tenor, total_bunga: 0 };
+  }
+  var i = bungaBulananPersen / 100;
+  var angsuranBulananAsli = pokok * (i * Math.pow(1 + i, tenor)) / (Math.pow(1 + i, tenor) - 1);
+  var angsuranBulanan = Math.round(angsuranBulananAsli);
+  var sisa = pokok;
+  var totalBunga = 0;
+  for (var j = 1; j <= tenor; j++) {
+    var bunga = Math.round(sisa * i);
+    totalBunga += bunga;
+    var pokokAngsuran;
+    if (j === tenor) {
+      pokokAngsuran = sisa;
+    } else {
+      pokokAngsuran = angsuranBulanan - bunga;
+    }
+    sisa -= pokokAngsuran;
+  }
+  return { angsuran_bulanan: angsuranBulanan, total_bunga: totalBunga };
+}
+
+function cariBungaAnuitasEkuivalen(pokok, tenor, targetTotalBungaFlat) {
+  var bawah = 0.0;
+  var atas = 100.0;
+  var bungaAnuitasBulanan = 0.0;
+  var presisi = 0.00001;
+  var iterasiMaks = 100;
+  for (var i = 0; i < iterasiMaks; i++) {
+    var tengah = (bawah + atas) / 2;
+    var hasilAnuitas = hitungAngsuranAnuitas(pokok, tenor, tengah);
+    var selisihBunga = hasilAnuitas.total_bunga - targetTotalBungaFlat;
+    if (Math.abs(selisihBunga) < presisi) {
+      bungaAnuitasBulanan = tengah;
+      break;
+    }
+    if (selisihBunga < 0) {
+      bawah = tengah;
+    } else {
+      atas = tengah;
+    }
+    bungaAnuitasBulanan = tengah;
+  }
+  return bungaAnuitasBulanan * 12;
+}
+
+function generateTabelAmortisasiFlat(pokok, tenor, bungaTahunan) {
+  var rows = [];
+  var sisaPinjaman = pokok;
+  var pokokPerBulanAsli = pokok / tenor;
+  var bungaPerBulanAsli = (pokok * (bungaTahunan / 100)) / 12;
+  var pokokPerBulan = Math.ceil(pokokPerBulanAsli / 100) * 100;
+  var bungaPerBulan = Math.ceil(bungaPerBulanAsli / 100) * 100;
+  var angsuranBulanan = pokokPerBulan + bungaPerBulan;
+  var totalAngsuran = 0, totalPokok = 0, totalBunga = 0;
+  for (var bulan = 1; bulan <= tenor; bulan++) {
+    var pokokSaatIni, bungaSaatIni, angsuranSaatIni;
+    if (bulan === tenor) {
+      pokokSaatIni = sisaPinjaman;
+      bungaSaatIni = bungaPerBulan;
+      angsuranSaatIni = pokokSaatIni + bungaSaatIni;
+    } else {
+      pokokSaatIni = pokokPerBulan;
+      bungaSaatIni = bungaPerBulan;
+      angsuranSaatIni = angsuranBulanan;
+    }
+    sisaPinjaman -= pokokSaatIni;
+    if (Math.abs(sisaPinjaman) < 0.01) sisaPinjaman = 0;
+    totalAngsuran += angsuranSaatIni;
+    totalPokok += pokokSaatIni;
+    totalBunga += bungaSaatIni;
+    rows.push({ bulan: bulan, angsuran: angsuranSaatIni, pokok: pokokSaatIni, bunga: bungaSaatIni, sisa_pinjaman: sisaPinjaman });
+  }
+  return { rows: rows, totals: { angsuran: totalAngsuran, pokok: totalPokok, bunga: totalBunga } };
+}
+
+function generateTabelAmortisasiAnuitas(pokok, tenor, bungaBulananPersen, angsuranBulananAsli) {
+  var rows = [];
+  var sisaPinjaman = pokok;
+  var i = bungaBulananPersen / 100;
+  var angsuranBulanan = Math.round(angsuranBulananAsli);
+  var totalAngsuran = 0, totalPokok = 0, totalBunga = 0;
+  for (var bulan = 1; bulan <= tenor; bulan++) {
+    var bunga = Math.round(sisaPinjaman * i);
+    var pokokAngsuran, angsuran;
+    if (bulan === tenor) {
+      pokokAngsuran = sisaPinjaman;
+      angsuran = pokokAngsuran + bunga;
+    } else {
+      angsuran = angsuranBulanan;
+      pokokAngsuran = angsuran - bunga;
+    }
+    sisaPinjaman -= pokokAngsuran;
+    if (Math.abs(sisaPinjaman) < 0.01) sisaPinjaman = 0;
+    totalAngsuran += angsuran;
+    totalPokok += pokokAngsuran;
+    totalBunga += bunga;
+    rows.push({ bulan: bulan, angsuran: angsuran, pokok: pokokAngsuran, bunga: bunga, sisa_pinjaman: sisaPinjaman });
+  }
+  return { rows: rows, totals: { angsuran: totalAngsuran, pokok: totalPokok, bunga: totalBunga } };
+}
+
+function formatRupiah(angka) {
+  return 'Rp ' + Math.round(angka).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+function formatPersen(angka) {
+  var formatted = angka.toFixed(4).replace('.', ',');
+  formatted = formatted.replace(/[.,]?0+$/, '');
+  if (formatted.endsWith(',')) formatted = formatted.slice(0, -1);
+  return formatted + '%';
+}
+
+function formatPersenBulanan(angka) {
+  return angka.toFixed(2).replace('.', ',') + '%';
+}
+
+var kalkulasiData = null;
+
+function hitungSimulasi(e) {
+  if (e) e.preventDefault();
+  var pokok = parseFloat(document.getElementById('nominal_pinjaman').value) || 0;
+  var tenor = parseInt(document.getElementById('tenor_bulan').value) || 0;
+  var sukuBunga = Math.ceil(parseFloat(document.getElementById('suku_bunga_tahunan').value) || 0);
+
+  if (pokok <= 0 || tenor <= 0) return;
+
+  var hasilFlat = hitungAngsuranFlat(pokok, tenor, sukuBunga);
+  var bungaAnuitasEkuivalen = cariBungaAnuitasEkuivalen(pokok, tenor, hasilFlat.total_bunga);
+  bungaAnuitasEkuivalen = Math.ceil(bungaAnuitasEkuivalen);
+  var hasilAnuitas = hitungAngsuranAnuitas(pokok, tenor, bungaAnuitasEkuivalen / 12);
+  var tabelFlat = generateTabelAmortisasiFlat(pokok, tenor, sukuBunga);
+  var tabelAnuitas = generateTabelAmortisasiAnuitas(pokok, tenor, bungaAnuitasEkuivalen / 12, hasilAnuitas.angsuran_bulanan);
+
+  kalkulasiData = {
+    nominal_pinjaman: pokok,
+    tenor_bulan: tenor,
+    flat: {
+      suku_bunga_tahunan: sukuBunga,
+      suku_bunga_bulanan: sukuBunga / 12,
+      angsuran_bulanan: tabelFlat.rows[0].angsuran,
+      total_bunga: tabelFlat.totals.bunga,
+      amortisasi: tabelFlat
+    },
+    anuitas: {
+      suku_bunga_tahunan: bungaAnuitasEkuivalen,
+      suku_bunga_bulanan: bungaAnuitasEkuivalen / 12,
+      angsuran_bulanan: tabelAnuitas.rows[0].angsuran,
+      total_bunga: tabelAnuitas.totals.bunga,
+      amortisasi: tabelAnuitas
+    }
+  };
+
+  document.getElementById('flatResults').innerHTML = tampilkanHasilCard(kalkulasiData.flat);
+  document.getElementById('anuitasResults').innerHTML = tampilkanHasilCard(kalkulasiData.anuitas);
+  document.getElementById('hasilSection').style.display = 'block';
+  document.getElementById('downloadSection').style.display = 'block';
+  document.getElementById('tabDetailBtn').style.display = 'inline-block';
+
+  tampilkanAmortisasi('flatAmortisasiBody', 'flatAmortisasiFoot', tabelFlat);
+  tampilkanAmortisasi('anuitasAmortisasiBody', 'anuitasAmortisasiFoot', tabelAnuitas);
+}
+
+function tampilkanHasilCard(data) {
+  return '<div class="card-item"><span>Suku Bunga (p.a.)</span><strong>' + formatPersen(data.suku_bunga_tahunan) + '</strong></div>' +
+    '<div class="card-item"><span>Suku Bunga (/bulan)</span><strong>' + formatPersenBulanan(data.suku_bunga_bulanan) + '</strong></div>' +
+    '<div class="card-item"><span>Angsuran / Bulan</span><strong>' + formatRupiah(data.angsuran_bulanan) + '</strong></div>' +
+    '<div class="card-item"><span>Total Bunga</span><strong>' + formatRupiah(data.total_bunga) + '</strong></div>';
+}
+
+function tampilkanAmortisasi(bodyId, footId, data) {
+  var bodyHtml = '';
+  for (var i = 0; i < data.rows.length; i++) {
+    var r = data.rows[i];
+    bodyHtml += '<tr><td>' + r.bulan + '</td><td>' + formatRupiah(r.angsuran) + '</td><td>' + formatRupiah(r.pokok) + '</td><td>' + formatRupiah(r.bunga) + '</td><td>' + formatRupiah(r.sisa_pinjaman) + '</td></tr>';
+  }
+  document.getElementById(bodyId).innerHTML = bodyHtml;
+  document.getElementById(footId).innerHTML = '<tr><td>TOTAL</td><td>' + formatRupiah(data.totals.angsuran) + '</td><td>' + formatRupiah(data.totals.pokok) + '</td><td>' + formatRupiah(data.totals.bunga) + '</td><td></td></tr>';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var formattedInput = document.getElementById('nominal_pinjaman_formatted');
+  var hiddenInput = document.getElementById('nominal_pinjaman');
+
+  formattedInput.addEventListener('input', function(e) {
+    var value = e.target.value;
+    var raw = value.replace(/[^0-9]/g, '');
+    hiddenInput.value = raw;
+    if (raw) {
+      e.target.value = new Intl.NumberFormat('id-ID').format(raw);
+    } else {
+      e.target.value = '';
+    }
+  });
+
+  function handleFocus(id, defaultValue) {
+    var elem = document.getElementById(id);
+    if (!elem) return;
+    var lastValue = elem.value;
+    elem.addEventListener('focus', function(e) {
+      lastValue = e.target.value;
+      e.target.value = '';
+      if (id === 'nominal_pinjaman_formatted') {
+        document.getElementById('nominal_pinjaman').value = '';
+      }
+    });
+    elem.addEventListener('blur', function(e) {
+      if (!e.target.value || e.target.value.trim() === '' || e.target.value === '0') {
+        e.target.value = lastValue || defaultValue;
+        if (id === 'nominal_pinjaman_formatted') {
+          var raw = (lastValue || defaultValue).replace(/[^0-9]/g, '');
+          document.getElementById('nominal_pinjaman').value = raw;
+        }
+      }
+    });
+  }
+
+  handleFocus('nominal_pinjaman_formatted', '10.000.000');
+  handleFocus('tenor_bulan', '12');
+  handleFocus('suku_bunga_tahunan', '15');
+
+  var tabLinks = document.querySelectorAll('.tab-link');
+  var tabPanes = document.querySelectorAll('.tab-pane');
+  tabLinks.forEach(function(link) {
+    link.addEventListener('click', function() {
+      var tab = link.getAttribute('data-tab');
+      tabLinks.forEach(function(l) { l.classList.remove('active'); });
+      tabPanes.forEach(function(p) { p.classList.remove('active'); });
+      link.classList.add('active');
+      document.getElementById(tab).classList.add('active');
+    });
+  });
+
+  document.getElementById('calcForm').addEventListener('submit', hitungSimulasi);
+
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    document.getElementById('nominal_pinjaman_formatted').value = '10.000.000';
+    document.getElementById('nominal_pinjaman').value = '10000000';
+    document.getElementById('tenor_bulan').value = '12';
+    document.getElementById('suku_bunga_tahunan').value = '15';
+    document.getElementById('hasilSection').style.display = 'none';
+    document.getElementById('downloadSection').style.display = 'none';
+    document.getElementById('tabDetailBtn').style.display = 'none';
+    kalkulasiData = null;
+  });
+
+  hitungSimulasi(null);
+
+  document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+    var data = kalkulasiData;
+    if (!data) return;
+    var { jsPDF } = window.jspdf;
+    var doc = new jsPDF('p', 'mm', 'a4');
+    var finalY = 20;
+    var fmtCurrency = function(num) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 2 }).format(num);
+    };
+    var fmtPercentPA = function(num) {
+      return new Intl.NumberFormat('id-ID', { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(num / 100) + '%';
+    };
+    var fmtPercentMonth = function(num) {
+      return new Intl.NumberFormat('id-ID', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num / 100) + '%';
+    };
+
+    doc.setFontSize(18);
+    doc.text('Hasil Simulasi Kredit', 14, finalY);
+    finalY += 10;
+    doc.setFontSize(12);
+    doc.text('Nominal Pinjaman : ' + fmtCurrency(data.nominal_pinjaman), 14, finalY);
+    finalY += 6;
+    doc.text('Tenor                   : ' + data.tenor_bulan + ' Bulan', 14, finalY);
+    finalY += 10;
+
+    doc.autoTable({
+      startY: finalY,
+      head: [['Metode', 'Suku Bunga (p.a.)', 'Suku Bunga (/bulan)', 'Angsuran / Bulan', 'Total Bunga']],
+      body: [
+        ['Flat', fmtPercentPA(data.flat.suku_bunga_tahunan), fmtPercentMonth(data.flat.suku_bunga_bulanan), fmtCurrency(data.flat.angsuran_bulanan), fmtCurrency(data.flat.total_bunga)],
+        ['Anuitas (Ekuivalen)', fmtPercentPA(data.anuitas.suku_bunga_tahunan), fmtPercentMonth(data.anuitas.suku_bunga_bulanan), fmtCurrency(data.anuitas.angsuran_bulanan), fmtCurrency(data.anuitas.total_bunga)]
+      ],
+      theme: 'grid',
+      headStyles: { fillColor: [73, 80, 87] }
+    });
+
+    finalY = doc.autoTable.previous.finalY + 15;
+    doc.setFontSize(14);
+    doc.text('Detail Angsuran Flat', 14, finalY);
+    finalY += 7;
+
+    var flatBody = data.flat.amortisasi.rows.map(function(row) {
+      return [row.bulan, fmtCurrency(row.angsuran), fmtCurrency(row.pokok), fmtCurrency(row.bunga), fmtCurrency(row.sisa_pinjaman)];
+    });
+    doc.autoTable({
+      startY: finalY,
+      head: [['Bln', 'Angsuran', 'Pokok', 'Bunga', 'Sisa Pinjaman']],
+      body: flatBody,
+      foot: [['TOTAL', fmtCurrency(data.flat.amortisasi.totals.angsuran), fmtCurrency(data.flat.amortisasi.totals.pokok), fmtCurrency(data.flat.amortisasi.totals.bunga), '']],
+      theme: 'grid',
+      headStyles: { fillColor: [15, 45, 79] },
+      footStyles: { fillColor: [15, 45, 79] }
+    });
+
+    finalY = doc.autoTable.previous.finalY + 15;
+    doc.setFontSize(14);
+    doc.text('Detail Angsuran Anuitas', 14, finalY);
+    finalY += 7;
+
+    var anuitasBody = data.anuitas.amortisasi.rows.map(function(row) {
+      return [row.bulan, fmtCurrency(row.angsuran), fmtCurrency(row.pokok), fmtCurrency(row.bunga), fmtCurrency(row.sisa_pinjaman)];
+    });
+    doc.autoTable({
+      startY: finalY,
+      head: [['Bln', 'Angsuran', 'Pokok', 'Bunga', 'Sisa Pinjaman']],
+      body: anuitasBody,
+      foot: [['TOTAL', fmtCurrency(data.anuitas.amortisasi.totals.angsuran), fmtCurrency(data.anuitas.amortisasi.totals.pokok), fmtCurrency(data.anuitas.amortisasi.totals.bunga), '']],
+      theme: 'grid',
+      headStyles: { fillColor: [24, 153, 125] },
+      footStyles: { fillColor: [24, 153, 125] }
+    });
+
+    finalY = doc.autoTable.previous.finalY + 12;
+    doc.setFontSize(8);
+    doc.setTextColor(100);
+    var disclaimer = 'Disclaimer: Perhitungan pada simulasi ini bersifat estimasi awal dan ditujukan sebagai informasi umum semata. Besaran angsuran, suku bunga, biaya administrasi, serta ketentuan lainnya dapat berubah sewaktu-waktu sesuai dengan kebijakan perbankan yang berlaku dan hasil analisa persetujuan kredit. Untuk mendapatkan kepastian rincian perhitungan dan proses pengajuan fasilitas kredit resmi, silakan mengunjungi atau menghubungi kantor operasional PT BPR ARTHA PAMENANG terdekat.';
+    var splitText = doc.splitTextToSize(disclaimer, 180);
+    doc.text(splitText, 14, finalY);
+    doc.save('simulasi-kredit.pdf');
+  });
+});
+</script>
+</body>
+</html>
